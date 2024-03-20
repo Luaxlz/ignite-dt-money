@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Header } from '../../components/Header';
 import { Summary } from '../../components/Header/Summary';
 import { SearchForm } from './components/SearchForm';
@@ -8,24 +7,15 @@ import {
   TransactionsTable,
 } from './styles';
 import { Transaction } from '../../@types/transactionType';
+import { TransactionsContext } from '../../contexts/TransactionContext';
+import currencyFormatter from '../../helpers/currencyFormat';
+import { useContextSelector } from 'use-context-selector';
 
 export function Transactions() {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-
-  const fetchTransactions = async () => {
-    const response = await fetch('http://localhost:3000/transactions');
-    const data = await response.json();
-    setTransactions(data);
-  };
-
-  const currencyFormat = new Intl.NumberFormat('pt-br', {
-    style: 'currency',
-    currency: 'BRL',
+  const transactions = useContextSelector(TransactionsContext, (context) => {
+    return context.transactions;
   });
 
-  useEffect(() => {
-    fetchTransactions();
-  }, []);
   return (
     <div>
       <Header />
@@ -42,7 +32,8 @@ export function Transactions() {
                   <td width='50%'>{transaction.description}</td>
                   <td>
                     <PriceHighlight variant={transaction.type}>
-                      {currencyFormat.format(transaction.price)}
+                      {transaction.type === 'outcome' && '- '}
+                      {currencyFormatter(transaction.price)}
                     </PriceHighlight>
                   </td>
                   <td>{transaction.category}</td>

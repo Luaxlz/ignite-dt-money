@@ -15,6 +15,38 @@
       "category": "Comida",
       "price": 50,
       "createdAt": "2024-02-12T00:12:12.751Z"
+    },
+    {
+      "description": "Teclado Gamer",
+      "price": 99,
+      "category": "Hardware",
+      "type": "outcome",
+      "createdAt": "2024-03-19T22:55:00.409Z",
+      "id": 3
+    },
+    {
+      "description": "Lubrificante",
+      "price": 18,
+      "category": "Produto",
+      "type": "outcome",
+      "createdAt": "2024-03-19T22:57:01.539Z",
+      "id": 4
+    },
+    {
+      "description": "Desenvolvimento de APP",
+      "price": 14999,
+      "category": "Desenvolvimento",
+      "type": "income",
+      "createdAt": "2024-03-19T22:58:11.847Z",
+      "id": 5
+    },
+    {
+      "description": "Burgão Podrão",
+      "price": 3999,
+      "category": "Alimentação",
+      "type": "outcome",
+      "createdAt": "2024-03-19T23:19:55.600Z",
+      "id": 6
     }
   ]
 }
