@@ -2,11 +2,14 @@ import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { Transaction } from '../@types/transactionType';
 import { api } from '../lib/axios';
 import { createContext } from 'use-context-selector';
+import axios, { AxiosResponse } from 'axios';
+import { toast } from 'react-toastify';
 
 type TransactionContextType = {
   transactions: Transaction[];
   fetchTransactions: (query?: string) => Promise<void>;
   createNewTransaction: (data: CreateNewTransactionData) => Promise<void>;
+  deleteTransaction: (transactionId: number) => Promise<AxiosResponse>;
 };
 
 type TransactionProviderProps = {
@@ -52,16 +55,30 @@ export function TransactionsProvider({ children }: TransactionProviderProps) {
       });
 
       setTransactions((state) => [response.data, ...state]);
+      toast.success('Transação criada com sucesso!', {
+        position: 'top-center',
+      });
     },
     [],
   );
+
+  const deleteTransaction = async (transactionId: number) => {
+    const response = await api.delete(`/transactions/${transactionId}`);
+    fetchTransactions();
+    return response;
+  };
 
   useEffect(() => {
     fetchTransactions();
   }, []);
   return (
     <TransactionsContext.Provider
-      value={{ transactions, fetchTransactions, createNewTransaction }}>
+      value={{
+        transactions,
+        fetchTransactions,
+        createNewTransaction,
+        deleteTransaction,
+      }}>
       {children}
     </TransactionsContext.Provider>
   );
